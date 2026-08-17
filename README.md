@@ -1,3 +1,6 @@
+<div align="center">
+  <img src="portscope_icon.png" width="150" alt="Spotlight Off Icon" />
+
 # PortScope
 
 **See what your USB-C cables, ports, and docks are actually doing.**
