@@ -3,7 +3,7 @@
 ## WhatCable
 
 The IOKit registry service-class mapping and portions of the USB-PD VDO
-decoding logic in `Cable Checker/Identity/` are adapted from
+decoding logic in `PortScope/Identity/` and `PortScope/Power/` are adapted from
 [WhatCable](https://github.com/darrylmorley/whatcable) by Darryl Morley,
 used under the MIT License:
 
