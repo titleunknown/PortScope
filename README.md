@@ -163,6 +163,25 @@ to share, with identifying details redacted by default.
 
 ---
 
+## Documents
+
+- [Changelog](CHANGELOG.md) — what changed in each release
+- [License Agreement](LICENSE.md) — the terms your license is granted under
+- [Privacy Policy](PRIVACY.md) — what stays on your Mac, and the two times the app goes online
+- [Acknowledgments](ACKNOWLEDGMENTS.md) — third-party notices
+
+This repository hosts PortScope's **releases and documentation**. The
+application's source code is not public.
+
+---
+
+© 2026 Faini Made Inc. All rights reserved. PortScope is a companion to a
+continuity tester, not a replacement — it verifies identity and throughput, not
+pin-level wiring.
+
+[releases]: https://github.com/titleunknown/PortScope/releases
+[store]: https://software.fainimade.com
+
 © Faini Made. PortScope is a companion to a continuity tester, not a
 replacement — it verifies identity and throughput, not pin-level wiring.
 
