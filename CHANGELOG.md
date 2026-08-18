@@ -8,7 +8,7 @@ a new, separately-licensed version ships.
 
 ---
 
-## Inital Release — 1.0
+## [1.0.0] — 2026-08-18
 
 First public release. Everything below is free unless marked **Licensed**.
 
