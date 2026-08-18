@@ -8,7 +8,7 @@ a new, separately-licensed version ships.
 
 ---
 
-## [Unreleased] — 1.0
+## Inital Release — 1.0
 
 First public release. Everything below is free unless marked **Licensed**.
 
