@@ -145,6 +145,7 @@ A single PortScope license:
   update is yours forever, with no subscription and no expiry.
 - Lets you **deactivate a Mac from Settings** any time, freeing that seat so you
   can license a different machine (the two-install cap always applies).
+- License available here -> https://software.fainimade.com/checkout/buy/ee68dddb-40ec-49de-91f8-02422bdff11f
 
 A future 2.0 is a separate, optional upgrade — 1.x keeps working regardless.
 
@@ -180,5 +181,5 @@ continuity tester, not a replacement — it verifies identity and throughput, no
 pin-level wiring.
 
 [releases]: https://github.com/titleunknown/PortScope/releases
-[store]: https://software.fainimade.com
+[store]: [https://software.fainimade.com](https://software.fainimade.com/checkout/buy/ee68dddb-40ec-49de-91f8-02422bdff11f)
 
