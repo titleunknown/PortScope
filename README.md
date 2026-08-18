@@ -182,8 +182,3 @@ pin-level wiring.
 [releases]: https://github.com/titleunknown/PortScope/releases
 [store]: https://software.fainimade.com
 
-© Faini Made. PortScope is a companion to a continuity tester, not a
-replacement — it verifies identity and throughput, not pin-level wiring.
-
-[releases]: https://github.com/fainimade/PortScope/releases
-[store]: https://software.fainimade.com
