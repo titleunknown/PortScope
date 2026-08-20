@@ -8,6 +8,26 @@ a new, separately-licensed version ships.
 
 ---
 
+## [1.0.1] — 2026-08-20
+
+### Added
+
+- **Live Data usage percentages** — each storage/network row now shows its
+  share of the port's own link ceiling, plus a total-usage bar for everything
+  moving through the port at once.
+- **Live Data volume names** — a storage row now leads with its mounted
+  volume name ("2TB") instead of the drive's model, with the model demoted
+  to a subtitle, matching the menu bar.
+
+### Fixed
+
+- **Menu bar eject button** — was missing for Thunderbolt/USB NVMe drives
+  (the kind of external SSD enclosure macOS reports as "Fixed" rather than
+  removable media); it now appears for any external drive, matching the
+  main window's behavior.
+
+---
+
 ## [1.0.0] — 2026-08-18
 
 First public release. Everything below is free unless marked **Licensed**.
