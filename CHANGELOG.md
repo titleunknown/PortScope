@@ -8,6 +8,36 @@ a new, separately-licensed version ships.
 
 ---
 
+## [1.0.2] — 2026-08-30
+
+### Added
+
+- **Cable Tester troubleshooting** — a new section in Settings ▸ Help covering
+  the common two-Mac test failures, plus a standalone guide at
+  [portscope.fainimade.com/cable-tester-troubleshooting](https://portscope.fainimade.com/cable-tester-troubleshooting)
+  (source in `docs/cable-tester-troubleshooting.html`).
+- **Cable Tester wired-link check** — the page warns when there's no
+  Thunderbolt / USB4 link to another Mac, and flags a host that was found
+  over Wi-Fi only (the test can't use it).
+
+### Fixed
+
+- **USB 3 link speed wrong on some Macs** — a 10 Gbps drive could show as
+  "5 Gbps" (and, on another port, a 5 Gbps hub as "10 Gbps"). The negotiated
+  link was read from the USB-C connector's capability rather than the rate
+  the link actually trained at; it now reads the real link rate. This
+  corrects the port's speed everywhere it appears — the sidebar, the
+  Negotiated Link card, "why is this slow?", the bandwidth budget, and the
+  Speed Test ceiling. Seen on Mac Studio; any Mac with standalone USB 3
+  ports could be affected.
+- **Cable Tester reliability** — the test now pins its connection to the exact
+  wired interface the host was discovered on, instead of letting the OS pick
+  among every wired interface (or drift toward Wi-Fi). Failure messages name
+  the real cause — link renegotiating, no wired route yet, connection refused —
+  rather than always suggesting a role swap.
+  
+---
+
 ## [1.0.1] — 2026-08-20
 
 ### Added
