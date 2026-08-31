@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cable Tester Troubleshooting — PortScope</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Step-by-step fixes for running PortScope's two-Mac Cable Tester when the host won't appear or the test won't start.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+
+<style>
+  :root {
+    --ground: #eef1f4;
+    --surface: #ffffff;
+    --surface-2: #f6f8fa;
+    --border: #dde2e8;
+    --ink: #1a1f26;
+    --muted: #586170;
+    --accent: #2f6fed;
+    --accent-soft: #e4ecfd;
+    --ok: #1f9d57;
+    --warn: #b9701a;
+    --fail: #cc3f38;
+    --shadow: 0 1px 2px rgba(20, 28, 40, .06), 0 8px 24px rgba(20, 28, 40, .05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #14171c;
+      --surface: #1b1f26;
+      --surface-2: #21262e;
+      --border: #2c333d;
+      --ink: #e7eaee;
+      --muted: #98a2af;
+      --accent: #6fa0f5;
+      --accent-soft: #1f2b3f;
+      --ok: #3fb873;
+      --warn: #e0913a;
+      --fail: #e35d54;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px rgba(0, 0, 0, .32);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #14171c;
+    --surface: #1b1f26;
+    --surface-2: #21262e;
+    --border: #2c333d;
+    --ink: #e7eaee;
+    --muted: #98a2af;
+    --accent: #6fa0f5;
+    --accent-soft: #1f2b3f;
+    --ok: #3fb873;
+    --warn: #e0913a;
+    --fail: #e35d54;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px rgba(0, 0, 0, .32);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 47rem;
+    margin: 0 auto;
+    padding: clamp(1.75rem, 5vw, 4rem) clamp(1.1rem, 4vw, 2rem) 5rem;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 .9rem;
+  }
+
+  h1 {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.9rem, 5vw, 2.5rem);
+    line-height: 1.12;
+    letter-spacing: -.015em;
+    text-wrap: balance;
+    margin: 0 0 .7rem;
+  }
+
+  .lede {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin: 0;
+    max-width: 40ch;
+  }
+
+  h2 {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.35rem;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+    margin: 0 0 .25rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .section-note {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: .95rem;
+    color: var(--muted);
+    margin: 0 0 1.15rem;
+  }
+
+  main { display: flex; flex-direction: column; gap: 2.6rem; margin-top: 2.8rem; }
+  section { display: flex; flex-direction: column; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  /* What you need — checklist */
+  .need {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .8rem;
+  }
+  .need li {
+    display: grid;
+    grid-template-columns: 1.4rem 1fr;
+    gap: .7rem;
+    align-items: start;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: .98rem;
+  }
+  .need svg { width: 1.4rem; height: 1.4rem; margin-top: .1rem; color: var(--accent); flex: none; }
+  .need b { font-weight: 600; }
+
+  /* Start-here steps */
+  .steps { counter-reset: step; list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+  .steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 1.9rem 1fr;
+    gap: .85rem;
+    align-items: start;
+  }
+  .steps li::before {
+    content: counter(step);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+    color: #fff;
+    background: var(--accent);
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+
+  /* Fix lists */
+  .fixes { counter-reset: fix; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .fixes > li {
+    counter-increment: fix;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: .9rem;
+    padding: 1.05rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .fixes > li:first-child { border-top: none; padding-top: .3rem; }
+  .fixes > li::before {
+    content: counter(fix);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--accent);
+    padding-top: .12rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .fixes h3 {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 0 0 .2rem;
+  }
+  .fixes p { margin: 0; color: var(--muted); font-size: 1rem; }
+
+  .plain { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .plain > li {
+    padding: .95rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .plain > li:first-child { border-top: none; padding-top: .2rem; }
+  .plain h3 {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 0 0 .2rem;
+  }
+  .plain p { margin: 0; color: var(--muted); font-size: 1rem; }
+
+  code, .mono {
+    font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: .88em;
+  }
+  code {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: .08em .38em;
+    white-space: nowrap;
+  }
+  .path { color: var(--ink); font-weight: 500; }
+
+  /* Error decoder */
+  .decoder { display: flex; flex-direction: column; gap: .8rem; }
+  .msg {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--sev, var(--muted));
+    border-radius: 8px;
+    padding: .9rem 1.1rem;
+  }
+  .msg--drop { --sev: var(--warn); }
+  .msg--route { --sev: var(--accent); }
+  .msg--refused { --sev: var(--fail); }
+  .msg--wifi { --sev: var(--warn); }
+  .msg q {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .86rem;
+    line-height: 1.5;
+    color: var(--ink);
+    quotes: none;
+    margin-bottom: .35rem;
+  }
+  .msg q::before, .msg q::after { content: ""; }
+  .msg p { margin: 0; font-size: .98rem; color: var(--muted); }
+  .msg p b { color: var(--ink); font-weight: 600; font-family: "IBM Plex Sans", sans-serif; }
+
+  /* Good result */
+  .result-grid { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+  @media (min-width: 34rem) { .result-grid { grid-template-columns: 8.5rem 1fr; align-items: center; } }
+  .spark {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .6rem;
+  }
+  .spark svg { display: block; width: 100%; height: auto; }
+  .spark .s-send { stroke: var(--accent); }
+  .spark .s-recv { stroke: var(--ok); }
+  .signs { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; font-family: "IBM Plex Sans", sans-serif; font-size: .98rem; }
+  .signs li { display: grid; grid-template-columns: 1.15rem 1fr; gap: .6rem; align-items: start; }
+  .signs .dot { width: .62rem; height: .62rem; border-radius: 50%; margin-top: .42rem; background: var(--ok); flex: none; }
+  .signs .dot.bad { background: var(--warn); }
+
+  .footnote {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: .92rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+    padding-top: 1.4rem;
+    display: grid;
+    gap: .8rem;
+  }
+  .footnote b { color: var(--ink); font-weight: 600; }
+
+  strong { font-weight: 600; }
+  a { color: var(--accent); }
+  a:focus-visible, li:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .spark .draw { stroke-dasharray: 240; stroke-dashoffset: 240; animation: draw 1.3s ease-out .2s forwards; }
+    .spark .draw.two { animation-delay: .35s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <p class="eyebrow">PortScope · Cable Tester</p>
+    <h1>Getting a cable test to run</h1>
+    <p class="lede">The test needs a live wired link between two Macs. When it won't start, that link is almost always the reason — here's how to get it up.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>What you need</h2>
+      <p class="section-note">All four, or the test can't run.</p>
+      <div class="card">
+        <ul class="need">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Two Apple&nbsp;Silicon Macs.</b> M1 or newer on both ends. Intel Macs can't do this test.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>The same version of PortScope</b> open on the <b>Cable&nbsp;Tester</b> page on each Mac.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>A Thunderbolt or USB4 cable.</b> A charge-only cable or a plain USB-C cable will not link two Macs, no matter how many times you retry. Look for the&nbsp;⚡ or a <em>USB4</em> / <em>40Gbps</em> marking near the plug.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>A direct connection.</b> Cable straight from a port on one Mac to a port on the other — not through a dock, hub, or adapter.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Start here</h2>
+      <p class="section-note">It doesn't matter which Mac hosts — the test measures both directions either way.</p>
+      <div class="card">
+        <ol class="steps">
+          <li><span>On <strong>one</strong> Mac, click <strong>Host on this Mac</strong>.</span></li>
+          <li><span>On the <strong>other</strong>, click <strong>Find a Host</strong>, then pick it from the list.</span></li>
+          <li><span>Click <strong>Run Test</strong> and wait. A 4&nbsp;GB run takes a minute or two.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <h2>The host doesn't appear in the list</h2>
+      <p class="section-note">The other Mac is advertising, but this one isn't seeing it.</p>
+      <div class="card">
+        <ul class="plain">
+          <li>
+            <h3>Give it 10–20 seconds</h3>
+            <p>Discovery isn't instant. Leave both windows on the Cable&nbsp;Tester page while it searches.</p>
+          </li>
+          <li>
+            <h3>Confirm the other Mac actually clicked Host on this Mac</h3>
+            <p>And that it's on the Cable&nbsp;Tester page, not another part of the app.</p>
+          </li>
+          <li>
+            <h3>Try it the other way round</h3>
+            <p>Host from the Mac that was searching, search from the Mac that was hosting.</p>
+          </li>
+          <li>
+            <h3>If PortScope says “Local Network access is off”</h3>
+            <p>On <em>both</em> Macs: open <span class="path mono">System&nbsp;Settings ▸ Privacy&nbsp;&amp;&nbsp;Security</span>, scroll to <strong>Local Network</strong>, switch PortScope on, then click <strong>Find a Host</strong> again.</p>
+          </li>
+          <li>
+            <h3>Reseat the cable</h3>
+            <p>Push both ends in firmly. A loose plug can carry power (the Mac still charges) while carrying no data.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>The host appears, but the test won't run</h2>
+      <p class="section-note">This is nearly always the wired link between the Macs, not PortScope. Work down the list in order — the early ones fix it most often.</p>
+      <div class="card">
+        <ol class="fixes">
+          <li>
+            <div>
+              <h3>Swap roles</h3>
+              <p>Host from the other Mac and search from this one. If one Mac <em>never</em> works as the host, that Mac is blocking incoming connections — check its Firewall and Local&nbsp;Network privacy.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Try different ports</h3>
+              <p>Move the cable to another USB-C port on each Mac. Ports on the same side of a laptop sometimes share one controller; the other side may behave differently.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Rotate the connector</h3>
+              <p>Unplug, flip the USB-C plug 180°, plug back in — both ends. A worn or marginal plug can link in one orientation and not the other.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Give the link time to come up</h3>
+              <p>After plugging in, macOS takes 10–30&nbsp;seconds to bring the connection up. Open <span class="path mono">System&nbsp;Settings ▸ Network</span> — <strong>Thunderbolt Bridge</strong> should appear and read <em>Connected</em>. If it doesn't, the cable isn't forming a Mac-to-Mac link.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Turn Wi-Fi off on one Mac</h3>
+              <p>When both Macs share a Wi-Fi network, the test can get pulled toward it and stall. It only ever runs over the cable, so switching Wi-Fi off on one end costs you nothing.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Unplug and reconnect the cable</h3>
+              <p>Both ends, wait five seconds, plug back in. Then wait for Thunderbolt Bridge to reconnect before retrying.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Quit VPN and networking apps</h3>
+              <p>Tailscale, WireGuard, Internet Sharing and similar tools reroute traffic and can swallow the direct connection. Quit them on both Macs for the test.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Keep both Macs awake and logged in</h3>
+              <p>The link drops when a Mac sleeps or sits at the login screen. Nudge the trackpad on the host if a run is long.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Restart both Macs</h3>
+              <p>Clears a stuck Thunderbolt Bridge — the single most effective reset when nothing else has worked.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Check Thunderbolt Bridge is set to DHCP</h3>
+              <p>In <span class="path mono">System&nbsp;Settings ▸ Network ▸ Thunderbolt Bridge ▸ Details ▸ TCP/IP</span>, set <strong>Configure IPv4</strong> to <em>Using DHCP</em> on <em>both</em> Macs. A leftover manual IP address on one side breaks the connection.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Rule out the cable</h3>
+              <p>Borrow a cable you know is Thunderbolt — the one from a Thunderbolt dock, or an Apple Thunderbolt&nbsp;4 Pro cable. If that one works and yours doesn't, you've found your answer: the cable can't sustain a Mac-to-Mac link.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <h2>What the messages mean</h2>
+      <p class="section-note">PortScope names the specific failure. Each points at a different fix.</p>
+      <div class="decoder">
+        <div class="msg msg--drop">
+          <q>The link dropped mid-test… the direct link is re-negotiating</q>
+          <p>The connection came up and then failed partway through. <b>Reseat both ends, wait, and run it again.</b> A cable that does this repeatedly is marginal — try another.</p>
+        </div>
+        <div class="msg msg--route">
+          <q>No wired route yet… hasn't finished coming up</q>
+          <p>Thunderbolt Bridge isn't connected. <b>Wait for it, keep both Macs awake,</b> then retry. Check <span class="path mono">System&nbsp;Settings ▸ Network</span>.</p>
+        </div>
+        <div class="msg msg--refused">
+          <q>Found it but it refused the connection</q>
+          <p>The host Mac is blocking incoming connections. <b>Swap roles,</b> or check that Mac's Firewall and Local&nbsp;Network privacy.</p>
+        </div>
+        <div class="msg msg--wifi">
+          <q>Found over Wi-Fi only — no wired link to this Mac yet</q>
+          <p>The other Mac was seen over Wi-Fi, but the cable link to it isn't up. <b>Wait for Thunderbolt Bridge to connect</b> — the test never runs over Wi-Fi.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What a good result looks like</h2>
+      <p class="section-note">Once it runs, this is how to read it.</p>
+      <div class="card">
+        <div class="result-grid">
+          <div class="spark" aria-hidden="true">
+            <svg viewBox="0 0 120 48" preserveAspectRatio="none">
+              <polyline class="draw s-send" points="2,34 16,20 30,17 44,19 58,16 72,18 86,15 100,17 118,16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline class="draw two s-recv" points="2,37 16,24 30,21 44,22 58,20 72,22 86,19 100,21 118,20" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <ul class="signs">
+            <li><span class="dot"></span><span>The graph is a fairly flat line — Send and Receive tracking close together.</span></li>
+            <li><span class="dot"></span><span>Consistency reads <strong>Steady</strong> or <strong>Minor fluctuation</strong>.</span></li>
+            <li><span class="dot bad"></span><span>An <strong>Erratic</strong> result with a jagged graph is the signature of a marginal cable retraining under load. Retest with a known-good cable to compare.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="footnote">
+      <p><b>“No device connected” can be misleading.</b> The Thunderbolt section of System&nbsp;Information sometimes shows nothing even while the test runs fine — a USB4 link through certain ports doesn't register there. Trust the test result, not that screen.</p>
+      <p><b>Nothing leaves your Macs.</b> The Cable&nbsp;Tester streams only between the two computers, straight over the cable being tested. No data goes to any server.</p>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
