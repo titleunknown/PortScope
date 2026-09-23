@@ -8,6 +8,60 @@ a new, separately-licensed version ships.
 
 ---
 
+## [1.0.4] — 2026-09-23
+
+### Added
+
+- **Vendor names** — cable, device and charger vendor IDs now show the
+  company name (e.g. "Apple Inc. (0x05AC)"): first from the USB-IF list
+  macOS ships, then from the Linux USB ID Repository (bundled, used under
+  the BSD 3-clause licence; see Settings ▸ About ▸ Acknowledgments), and
+  otherwise the hex ID.
+- **Charger profiles** — every voltage the charger offers is listed, with the
+  one in use marked and any the cable can't carry at full current flagged.
+- **Battery state** — charging, full, charging paused (Optimized Battery
+  Charging, a charge limit or temperature), or not charging because the
+  adapter is too weak. Shown on the port page, in the sidebar and in the
+  menu bar.
+- **Unusual e-marker values** — the Cable card flags a cable whose chip
+  contradicts itself: no vendor ID, EPR claimed on a 3 A or 20 V cable, a
+  passive 40/80 Gbps cable claiming over 2 m, reserved codes, or a chip that
+  doesn't identify as a cable.
+- **Display signal** — for external monitors: the resolution actually being
+  sent (not just the desktop mode), whether it's the panel's native
+  resolution, bit depth, and whether DSC compression is on, with the
+  bandwidth the mode needs against what the link carries.
+- **Charging-path resistance** — an estimate of the resistance between the
+  charger and the Mac, from how the voltage sags as the load changes.
+- **Per-row sources** — the Power and Power Contract cards now tag each row
+  with where it came from (charger, cable chip, negotiated, measured).
+
+---
+
+## [1.0.3] — 2026-09-23
+
+### Added
+
+- **Cable Tester results saved on both Macs** — after a test, either Mac can
+  name and save the result, and it's recorded in the history on both. The
+  host now gets the Save card and verdict too (previously only the Mac that
+  started the test did).
+
+### Fixed
+
+- **Tether "Average frame" too small** — a frame was sized while its file was
+  still being written, and sidecar files (Capture One settings/thumbnails,
+  `.xmp`) and RAW+JPEG pairs counted as extra frames. Frames now use their
+  finished size, only image files count, and a RAW+JPEG pair is one frame.
+- **Tether "Per frame" inflated by breaks** — a pause between sets no longer
+  skews the time between shots.
+- **Cable Tester directions on the host** — the host showed Send and Receive
+  swapped; both Macs now report them from their own side.
+
+> Both Macs must run 1.0.3 to use the Cable Tester together.
+
+---
+
 ## [1.0.2] — 2026-08-30
 
 ### Added
@@ -35,7 +89,7 @@ a new, separately-licensed version ships.
   among every wired interface (or drift toward Wi-Fi). Failure messages name
   the real cause — link renegotiating, no wired route yet, connection refused —
   rather than always suggesting a role swap.
-  
+
 ---
 
 ## [1.0.1] — 2026-08-20
