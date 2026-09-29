@@ -8,6 +8,81 @@ a new, separately-licensed version ships.
 
 ---
 
+## [1.0.5] — 2026-09-29
+
+### Fixed
+
+- **Cable no longer blamed for a slower device.** A 5 Gbps drive on a
+  10 Gbps-rated cable is now reported as the device being the limit, not a
+  cable fault, and a 10 Gbps USB drive on a 40/80 Gbps cable is no longer
+  graded "limited" by the speed test.
+- **Untrained USB links** no longer read as the connector's capability rate
+  (a USB 2.0 device could show "10 Gbps link up").
+- **Cable power rating** now follows the spec: above 20 V only counts for an
+  EPR-marked 5 A cable, and the 30 V / 40 V codes are decoded. A cable's
+  length is no longer shown for the open-ended "long" latency code.
+- **Cable health** keeps a separate baseline per port, so two identical
+  cables plugged in together both record errors.
+- **Random-write speed** no longer includes the final flush in its timing.
+- **History files** that can't be read are set aside (`*.corrupt-…json`)
+  instead of being overwritten by the next result.
+- **Licence check** no longer revokes a licence on a server error reply.
+- Charger profiles show fractional amps correctly (2.25 A, not 2.2 A).
+
+### Added
+
+- **Reference intro:** the first time the Reference page opens, a short card
+  says what it's for (speeds and names, power, glossary), with a "Don't show
+  this again" checkbox.
+- **System notifications**, off by default, in Settings ▸ Notifications. A
+  master switch (which is what asks macOS for permission) plus a switch for
+  each kind: device or display connected / disconnected, cable warnings (an
+  e-marker that contradicts itself, or a cable rated below the charger),
+  link errors and overcurrent, power adapter connected or removed, an adapter
+  too weak to charge, a drive passing 65 °C, a speed test finishing in the
+  background, and a new PortScope release. Repeats are held back, a
+  dock plugging in gives one banner rather than one per device, and clicking
+  a banner brings the window back.
+- **Automatic update check**, off by default: Settings ▸ About. Once a day
+  while PortScope runs; a new version is announced once.
+- **Erase** for speed test history and cable tester history in Settings ▸
+  Data, alongside the cable health record and display names.
+- **Speed Test keeps the Mac awake** for the length of a run, so a long
+  sustained test isn't cut short by idle sleep (and App Nap can't skew the
+  timing).
+- **Speed Test clears leftovers:** test folders left on a drive by a run that
+  crashed or was force-quit are deleted before the next run.
+- **Battery warning** on the Speed Test page when the Mac is running on
+  battery, stronger for a sustained test.
+
+### Changed
+
+- **Buy** buttons now open the checkout page directly.
+- **Text is a little larger** throughout: small captions went from 10 to 11 pt
+  and supporting text from 12 to 13 pt, closer to the system's own size. The
+  menu-bar popover and Settings window are slightly wider to match.
+- **Reference** corrected after an accuracy review: the 40 and 80 Gbps rows use
+  the USB-IF's current names ("USB 40Gbps", "USB 80Gbps"), the 80 Gbps cable
+  note no longer implies any 40 Gbps cable will do, the Thunderbolt/USB4
+  storage speed is ~3,000 MB/s rather than 4,000, charge-only cables are no
+  longer said to carry USB 2.0, and the XID, e-marker, billboard, connect
+  count and SuperSpeed glossary entries were corrected.
+- **Settings ▸ Speed Test** offers the same test sizes as the Speed Test page
+  (it listed 32 GB, which the page doesn't, and had no sustained sizes), and
+  hides size and sustained for the 4K responsiveness test.
+- **Settings ▸ Data** lists your saved display names and can forget them.
+- **Help** corrected: the Cable Tester never runs over Wi-Fi or a VPN, both
+  Macs need the same version, and the privacy note now mentions licence
+  validation. New entries for the wiggle test, unusual e-marker values,
+  tethered shooting and Export Report.
+- **Settings** now has a left sidebar (General, Notifications, Help, About)
+  instead of tabs across the top, without a collapse button.
+- **Contrast:** de-emphasised text, yellow status text and the throttle-chart
+  labels now use the AA-checked palette in light and dark mode.
+- About now links to the Faini Made Software Policy.
+
+---
+
 ## [1.0.4] — 2026-09-23
 
 ### Added
