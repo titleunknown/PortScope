@@ -1,6 +1,6 @@
 # PortScope Privacy Policy
 
-**Last updated: 17 August 2026**
+**Last updated: 29 September 2026**
 
 **Faini Made Inc.** ("Faini Made", "we", "us") builds PortScope. This policy
 explains what the PortScope application does and does not do with information on
@@ -79,12 +79,23 @@ https://www.lemonsqueezy.com/privacy.
 ### 3.2 Checking for updates
 
 When you click **Check for Updates**, PortScope requests the latest release
-information from the public GitHub API. This request contains no personal
+information from the public GitHub API. If you turn on **Check for updates
+automatically** in **Settings → About** (it is off by default), PortScope makes
+the same request about once a day while it is running. This request contains no personal
 information beyond what any web request necessarily includes, such as your IP
 address, which is handled by GitHub. See GitHub's privacy statement at
 https://docs.github.com/site-policy/privacy-policies.
 
-### 3.3 The two-Mac Cable Tester
+### 3.3 System notifications
+
+Notifications are **off by default** and are produced entirely on your Mac from
+information PortScope already reads locally (a device connecting, a power
+adapter being removed, a drive's temperature, and so on). They are delivered
+through macOS's own notification system. Nothing about them is sent to Faini
+Made or any third party. You choose which kinds to receive in **Settings →
+Notifications**.
+
+### 3.4 The two-Mac Cable Tester
 
 The Cable Tester sends test data **directly between your two Macs** over the
 cable or local link you are testing. This traffic does not leave your local
