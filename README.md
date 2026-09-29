@@ -1,9 +1,4 @@
-<div align="center">
-  <img src="portscope_icon.png" width="150" alt="Spotlight Off Icon" />
-  
 # PortScope
-
-<div align="left">
 
 **See what your USB-C cables, ports, and docks are actually doing.**
 
@@ -112,6 +107,10 @@ the tools that actively *test* a cable and a drive, and track them over time.
   with power, throughput, and volume names at a glance.
 - **Volumes & drive health.** Mounted volumes, free space, drive temperature and
   NVMe health for internal and Thunderbolt/USB4 NVMe drives.
+- **Notifications (off by default).** Optional system alerts, with a switch
+  for each kind: a device or display connecting or leaving, cable warnings and
+  link errors, a power adapter plugged in or removed, an adapter too weak to
+  charge, a drive running hot, and a finished test.
 - **Shareable report.** A one-page Markdown diagnostic, with personal details
   redacted by default, ready to paste into a support thread.
 
@@ -145,7 +144,6 @@ A single PortScope license:
   update is yours forever, with no subscription and no expiry.
 - Lets you **deactivate a Mac from Settings** any time, freeing that seat so you
   can license a different machine (the two-install cap always applies).
-- License available here -> https://software.fainimade.com/checkout/buy/ee68dddb-40ec-49de-91f8-02422bdff11f
 
 A future 2.0 is a separate, optional upgrade — 1.x keeps working regardless.
 
@@ -181,5 +179,4 @@ continuity tester, not a replacement — it verifies identity and throughput, no
 pin-level wiring.
 
 [releases]: https://github.com/titleunknown/PortScope/releases
-[store]: [https://software.fainimade.com](https://software.fainimade.com/checkout/buy/ee68dddb-40ec-49de-91f8-02422bdff11f)
-
+[store]: https://software.fainimade.com
