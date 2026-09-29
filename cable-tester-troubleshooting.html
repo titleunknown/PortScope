@@ -336,7 +336,7 @@
         <ol class="steps">
           <li><span>On <strong>one</strong> Mac, click <strong>Host on this Mac</strong>.</span></li>
           <li><span>On the <strong>other</strong>, click <strong>Find a Host</strong>, then pick it from the list.</span></li>
-          <li><span>Click <strong>Run Test</strong> and wait. A 4&nbsp;GB run takes a minute or two.</span></li>
+          <li><span>Click <strong>Run Test</strong> and wait. The default 4&nbsp;GB run is quick; larger sizes soak the cable for longer.</span></li>
         </ol>
       </div>
     </section>
@@ -401,8 +401,8 @@
           </li>
           <li>
             <div>
-              <h3>Turn Wi-Fi off on one Mac</h3>
-              <p>When both Macs share a Wi-Fi network, the test can get pulled toward it and stall. It only ever runs over the cable, so switching Wi-Fi off on one end costs you nothing.</p>
+              <h3>Don't worry about Wi-Fi</h3>
+              <p>The test only ever runs over the wired link, never over Wi-Fi, so there is no need to switch it off. If PortScope can only see the other Mac over Wi-Fi, that means the cable link isn't up yet, which is what the steps here are for.</p>
             </div>
           </li>
           <li>
@@ -413,8 +413,8 @@
           </li>
           <li>
             <div>
-              <h3>Quit VPN and networking apps</h3>
-              <p>Tailscale, WireGuard, Internet Sharing and similar tools reroute traffic and can swallow the direct connection. Quit them on both Macs for the test.</p>
+              <h3>Turn off Internet Sharing</h3>
+              <p>If Internet Sharing is on, macOS may take over the Thunderbolt Bridge for itself. Switch it off under System Settings ▸ General ▸ Sharing on both Macs. VPNs such as Tailscale can't carry the test, since it only uses the wired link, but a stuck one is worth quitting if nothing else works.</p>
             </div>
           </li>
           <li>
