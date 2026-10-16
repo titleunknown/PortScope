@@ -25,22 +25,34 @@ which one is holding you back.
 ### 🔬 Disk Speed Test that explains *why* a drive slows down
 
 Most disk benchmarks hand you a burst number and stop. PortScope writes and reads
-a real file to measure **true sustained** throughput, then keeps analyzing the
-curve:
+a real file and keeps analyzing the curve:
 
-- **Live drive-temperature telemetry** alongside the speed graph — watch the two
-  move together.
+- **See exactly where the speed drops.** A sustained run writes until the
+  drive's fast cache fills and the speed settles, then stops on its own (up to
+  a limit you choose). Each drop is marked on the chart with **when it
+  happened, how much had been written, and how hot the drive was**.
 - **SLC write-cache sizing.** Consumer SSDs absorb writes into a fast pseudo-SLC
   region, then fall off a cliff when it fills. PortScope finds that fold-over and
   reports roughly **how big your drive's fast cache is** and the slower speed
   underneath it.
 - **Thermal throttle detection.** It catches the moment a drive slows *because
-  it's heating up* — and, crucially, tells that apart from the cache cliff, so
-  you know whether the slowdown is a full cache or a hot controller.
+  it's heating up* — and tells that apart from the cache cliff, so you know
+  whether the slowdown is a full cache or a hot controller.
+- **A verdict that names the bottleneck.** The result is judged against the
+  slowest part of the chain: "about 99% of what a 40 Gbps link delivers", or
+  "the drive is the limit, not the cable".
+- **Honest numbers.** Quick tests are labelled *burst*, only sustained runs are
+  called *sustained*, and a run is flagged if something else was using the
+  drive or the Mac was holding itself back. On fast NVMe drives the results
+  match AmorphousDiskMark's queue-depth-8 figures.
 
 That's the analysis a tool like Blackmagic Disk Speed Test doesn't give you: not
 just "how fast," but **how long it stays fast, and why it stops.** Every run is
-saved with its temperature curve and exportable to CSV.
+saved to Speed Test History with its curves, and exports as a PDF report or CSV.
+
+![A sustained Speed Test: write and read over time, with the drive's cache-full drop marked with its time, data written and temperature](Screenshots/PortScope_SpeedTest.jpg)
+
+![Speed Test History: each run laid out in cards, with its throughput chart](Screenshots/PortScope_History.jpg)
 
 ### 🔗 Two-Mac Cable Tester — test the cable, not the drive
 
@@ -116,10 +128,12 @@ the tools that actively *test* a cable and a drive, and track them over time.
 
 ### Paid — Verification & testing
 
-- **Speed Test.** Write then read a real file to measure true sustained
-  throughput, with a live curve, drive-temperature telemetry, **SLC
-  write-cache sizing**, **thermal-throttle detection**, saved history, and CSV
-  export. (See [Highlights](#highlights).)
+- **Speed Test.** Write then read a real file: quick burst tests, or sustained
+  runs that stop on their own once the cache has filled and the speed settled.
+  A live curve marks each drop with its time, data written and drive
+  temperature, plus **SLC write-cache sizing**, **thermal-throttle detection**,
+  a verdict that names the slowest link, and Speed Test History with PDF and
+  CSV export. (See [Highlights](#highlights).)
 - **Cable Tester (two-Mac).** Stream data memory-to-memory between two Macs over
   the cable under test, so on a Thunderbolt port the cable is the only thing that
   can be the bottleneck. Requires a license on both Macs. (See
