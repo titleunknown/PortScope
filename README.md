@@ -1,3 +1,5 @@
+<p align="center"><img src="PortScope-Site/public/assets/icon.png" width="128" alt="PortScope app icon"></p>
+
 # PortScope
 
 **See what your USB-C cables, ports, and docks are actually doing.**
@@ -17,6 +19,8 @@ number:
 A cable can say "40 Gbps," negotiate 10, and deliver 3 because it's plugged into
 a hub's slow port. PortScope keeps those three claims separate and tells you
 which one is holding you back.
+
+![PortScope's port page: the negotiated link, the power contract, and the cable's e-marker identity for one USB-C port](Screenshots/PortScope_1.jpg)
 
 ---
 
@@ -52,7 +56,16 @@ saved to Speed Test History with its curves, and exports as a PDF report or CSV.
 
 ![A sustained Speed Test: write and read over time, with the drive's cache-full drop marked with its time, data written and temperature](Screenshots/PortScope_SpeedTest.jpg)
 
-![Speed Test History: each run laid out in cards, with its throughput chart](Screenshots/PortScope_History.jpg)
+<table>
+  <tr>
+    <td width="50%"><img src="Screenshots/PortScope_SpeedTest_2.jpg" alt="Speed Test results with the SLC cache estimate, speed against drive temperature, and a verdict naming the bottleneck"></td>
+    <td width="50%"><img src="Screenshots/PortScope_History.jpg" alt="Speed Test History with each run laid out in cards and its throughput chart"></td>
+  </tr>
+  <tr>
+    <td><b>Results.</b> Cache size, speed against temperature, and a verdict that names the bottleneck.</td>
+    <td><b>Speed Test History.</b> Every run saved with its curves; tick tests to export a PDF report or CSV.</td>
+  </tr>
+</table>
 
 ### 🔗 Two-Mac Cable Tester — test the cable, not the drive
 
@@ -62,6 +75,8 @@ between two Macs** over the cable under test, so on a Thunderbolt port the
 **cable is the only thing that can be the bottleneck** — no SSD, no filesystem,
 no enclosure limiting the result. Run it on the cable you *think* is 40 Gbps and
 find out what it actually carries.
+
+![Cable Tester streaming data memory-to-memory between two Macs over the cable under test](Screenshots/PortScope_CableTest.jpg)
 
 ---
 
@@ -126,6 +141,25 @@ the tools that actively *test* a cable and a drive, and track them over time.
 - **Shareable report.** A one-page Markdown diagnostic, with personal details
   redacted by default, ready to paste into a support thread.
 
+<table>
+  <tr>
+    <td width="50%"><img src="Screenshots/PortScope_2.jpg" alt="Bandwidth budget and downstream device list for a dock chain"></td>
+    <td width="50%"><img src="Screenshots/PortScope_4.jpg" alt="Power contract card showing the cable ceiling, negotiated contract, and live draw"></td>
+  </tr>
+  <tr>
+    <td><b>Docks and bandwidth.</b> How a dock's link is shared between video and data, and everything plugged into it.</td>
+    <td><b>Power contract.</b> Adapter rating, cable ceiling, negotiated contract and live draw, kept apart.</td>
+  </tr>
+  <tr>
+    <td><img src="Screenshots/PortScope_Display.jpg" alt="Display page showing DisplayPort lane allocation and EDID identity"></td>
+    <td align="center"><img src="Screenshots/PortScope_Menubar.jpg" width="80%" alt="Menu bar popover listing connected devices with live data and power readouts"></td>
+  </tr>
+  <tr>
+    <td><b>Displays.</b> DisplayPort lane allocation, the active signal, and the monitor's EDID identity.</td>
+    <td><b>Menu bar.</b> Connected devices with live data and power, a click away.</td>
+  </tr>
+</table>
+
 ### Paid — Verification & testing
 
 - **Speed Test.** Write then read a real file: quick burst tests, or sustained
@@ -146,6 +180,8 @@ the tools that actively *test* a cable and a drive, and track them over time.
   the instant it glitches — and localizing it to a connector.
 - **Rename Display.** Give a monitor your own name, keyed to its EDID so it
   sticks across replugs, without ever writing to the display.
+
+![Cable Health over time: a chart tracking a cable's link errors across sessions](Screenshots/PortScope_3.jpg)
 
 ---
 
