@@ -1,4 +1,4 @@
-<p align="center"><img src="PortScope-Site/public/assets/icon.png" width="128" alt="PortScope app icon"></p>
+<p align="center"><img src="https://github.com/titleunknown/PortScope/blob/main/portscope_icon.png" width="128" alt="PortScope app icon"></p>
 
 # PortScope
 
