@@ -8,6 +8,115 @@ a new, separately-licensed version ships.
 
 ---
 
+## [1.0.6] — 2026-10-16
+
+### Speed Test
+
+The Speed Test was rebuilt around one question: how fast does this drive go,
+for how long, and what stops it?
+
+- **Accurate on fast drives.** The video test now keeps several requests in
+  flight on APFS volumes, the way a real copy does. One request at a time held
+  fast NVMe drives back: an internal SSD that reads 6.9 GB/s measured 5.8. On a
+  WD_BLACK SN850X over a 40 Gbps link the results now match AmorphousDiskMark's
+  queue-depth-8 figures within 0.5% for reads and 2.7% for writes. Other file
+  systems keep writing one request at a time, which measured faster on exFAT
+  and Mac OS Extended.
+- **Sustained runs stop on their own.** Choose how much the test may write
+  ("Write at most"). It stops sooner once the speed has settled after the
+  drive's cache fills, keeps going while the drive is still heating up, then
+  reads for 30 seconds.
+- **See where the drop happens.** The throughput chart marks each drop in write
+  speed with the time, how much had been written, the drive's temperature and
+  the speed either side. A second drop (a drive slowing again as it starts
+  folding data out of its cache) gets its own marker, and the point where
+  thermal throttling began is marked in orange. Write and read both start at
+  zero so their lengths compare at a glance, with each pass's duration and the
+  total underneath.
+- **Burst or sustained, never confused.** A quick test fits inside the drive's
+  fast cache, so its results are labelled "Burst" and only a sustained run's
+  are called "Sustained".
+- **Judged against what the connection can really carry.** The verdict now
+  finds the slowest part of the chain (the port's link, the drive's own USB or
+  PCIe connection, or a hub) and compares the result with what that kind of
+  link typically delivers: "3,433 MB/s, about 99% of what a 40 Gbps link
+  delivers", or "the drive is the limit, not the cable" for a 10 Gbps drive
+  on a faster port. The internal drive is described as a baseline instead of
+  asking which port its cable is in.
+- **Warns when a result may be off.** A run is flagged when something else
+  used the drive at the same time (another app, Spotlight, Time Machine),
+  when some reads came from memory, or when Low Power Mode, battery power or a
+  hot Mac may have held it back. Low Power Mode is also flagged before you
+  start.
+- **Records the drive's state.** Each result notes the file system, how full
+  the drive was, encryption and TRIM, and adds a note when one of them changes
+  how to read the result (an SSD's fast cache shrinks as it fills).
+- **Drives that don't report temperature are named as such**, on the results
+  and in history, instead of leaving the reading blank.
+- **No more "0 W" for drives powered by a dock** or their own supply.
+- **Rescan clears the last result** off the Speed Test page.
+- **Short tests run long enough to measure.** Each pass now runs for at least
+  six seconds, so a 1 GB test on a fast drive is no longer over before it
+  takes a reading.
+
+### Speed Test History
+
+- **Renamed from "History"**, since it only holds speed tests.
+- **Tick boxes and Select All.** Export the ticked tests as one PDF report
+  (a page per test) or one CSV, or delete them.
+- **Laid out like the rest of the app**, in cards: write and read up top in
+  the chart's colours, then the run, the connection, the drive and the
+  verdict. The expanded charts have their own cards and titles.
+- **Curves keep their dips.** Long runs are stored and drawn with every stall
+  intact instead of being thinned past them.
+- **Older results are marked.** Video tests saved before this version ran one
+  request at a time and read low on fast drives, so they carry a note saying
+  to compare them loosely.
+
+### Fixed
+
+- **Tether Throughput no longer fails silently.** A capture folder that has
+  gone missing (typically an external drive that remounted under a new name,
+  such as `Backup 1` beside `Backup`) or that macOS won't let PortScope read
+  now shows a warning instead of a card reading 0 MB/s forever. When the folder
+  returns, files already in it are no longer counted as newly arrived frames.
+- **A very large capture folder** (over 20,000 files) now says that newer
+  frames may be missed, rather than quietly under-counting.
+- **An idle Thunderbolt port no longer reads as linked.** A port whose
+  Thunderbolt/USB4 link has gone inactive, or that has nothing connected, no
+  longer shows its last link speed.
+- **"No e-marker" no longer implies a cheap cable.** Through a charger macOS
+  usually can't read a cable's e-marker at all, and the Cable card now says so
+  instead of suggesting a USB 2.0 or charge-only cable. With a device
+  attached, it notes that ordinary 3 A cables aren't required to carry one.
+- **Devices behind older Thunderbolt 3 docks appear on their port again.**
+  Docks such as the CalDigit TS3 Plus bring their own USB controllers, and
+  everything plugged into them (drives, card readers, audio) was missing from
+  the port's device list.
+- **No false "DSC on" for TVs.** A display taking a non-RGB signal (TVs often
+  use reduced colour such as 4:2:0) is no longer assumed to need full RGB
+  bandwidth, so PortScope no longer infers compression it can't see.
+
+### Added
+
+- **No-frames hint:** if a camera has been connected for a minute and not one
+  frame has landed in the capture folder, the Tether Throughput card suggests
+  checking that your tethering app is saving to it.
+- **A charger's contract can prove the cable.** Chargers may only offer more
+  than 3 A over a cable they've confirmed is rated for 5 A, so a contract
+  above 3 A now shows the cable as "At least 5 A" on the Power Contract card,
+  even when macOS never read its e-marker.
+- **Docks named by Thunderbolt.** A Thunderbolt dock that doesn't announce
+  itself over USB (such as the CalDigit TS3 Plus) now gets its own row, with
+  everything plugged into it listed underneath. This only happens when it's
+  the one Thunderbolt device on the port, so a daisy chain never files one
+  box's devices under another.
+- **"Linked to another Mac".** A Thunderbolt cable to another Mac now says so
+  in the sidebar and names the far end's model on the Negotiated Link card,
+  instead of reading like a cable waiting for a device.
+
+---
+
 ## [1.0.5] — 2026-09-29
 
 ### Fixed
