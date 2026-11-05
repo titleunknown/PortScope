@@ -8,6 +8,84 @@ a new, separately-licensed version ships.
 
 ---
 
+## [1.0.8] — 2026-11-05
+
+### Licensing fixes
+
+- **A license no longer lapses while the app is running.** PortScope only
+  re-checked a license when its window opened, so one left running for two
+  weeks could report that it wasn't licensed even with a working connection. It
+  now checks at launch, daily, after waking and when the network returns.
+- **Entering your key again no longer uses up a seat.** Re-entering a key on a
+  Mac that was already activated took a second activation and stranded the
+  first, so a single Mac could reach "2 of 2". PortScope now reuses this Mac's
+  activation, and changing to a different key releases the old one. Activations
+  already stranded by an earlier version don't clear themselves; contact support
+  and we'll free them.
+- **Honest status.** If PortScope can't reach the licensing server for 14 days,
+  it says it couldn't confirm your license and offers Check Again, rather than
+  "Not licensed". The tools unlock by themselves once the Mac is back online.
+- **Deactivate This Mac** is now always available on an activated Mac, shows an
+  error if it fails, and only removes the license from this Mac once the seat
+  has actually been freed.
+- An activation removed online now takes effect at the next check, rather than
+  up to 14 days later.
+- The count now reads "1 of 2 activations in use" rather than "Macs", and new
+  activations carry their date, so they can be told apart.
+- **Contact Support** links now appear where a license problem needs a person.
+- **Cable Health** background recording starts as soon as a license is activated,
+  and stops when a Mac isn't licensed. Link error alerts still work without a
+  license.
+
+### Fixes
+
+- **Port pages no longer jump around with a very low-power device attached.** With
+  something like a YubiKey plugged in, the measured current flickered between
+  0.01 A and 0.00 A, and the Power Contract card appeared and vanished with it,
+  moving everything below it. The card now stays put.
+
+---
+
+## [1.0.7] — 2026-10-28
+
+### Link speed alerts
+
+Find out when a connection slows down, such as a 10 Gbps drive falling back to
+480 Mbps because of a worn cable or a loose connector.
+
+- **Speed drops are noticed.** A drive that drops to USB 2.0 disconnects and
+  reconnects, so PortScope recognises it coming back and sends one alert,
+  "Samsung T7 dropped to 480 Mbps", instead of a "disconnected" and a
+  "connected". A Thunderbolt or USB4 link that retrains slower (40 to
+  20 Gbps) is caught too, once the new speed holds.
+- **Watch the ports and devices you care about.** Tick "Notify if link speed
+  changes" on a port's page, from a device's right-click menu, or in a
+  device's menu-bar details, to hear about any change, up or down. Watching a
+  port covers everything plugged into it. Watched items are listed in
+  Settings ▸ Notifications.
+- **Choose the sound.** Notifications can play any of the Mac's alert sounds,
+  with a preview.
+
+### Speed drop alarm
+
+For anyone who keeps notifications off or works in a Focus. Both are off by
+default, in Settings ▸ Notifications ▸ Link speed alarm.
+
+- **In the menu bar.** A warning mark replaces the device count, and the drop
+  is listed at the top of the menu ("Was 10 Gbps on USB-C 2") until it's
+  dismissed or the link gets its speed back.
+- **A sound that gets through.** PortScope can play the alert sound itself, so
+  it is heard in a Focus or with notifications blocked. Muting the Mac still
+  silences it.
+
+### Speed Test History
+
+- **Easier to scan.** Each test shows just its write and read speeds and how
+  it ran; click it for the connection, the drive, the verdict and the charts.
+  A test whose result came with a warning shows a warning mark.
+
+---
+
 ## [1.0.6] — 2026-10-16
 
 ### Speed Test
