@@ -8,6 +8,40 @@ a new, separately-licensed version ships.
 
 ---
 
+## [1.0.9] — 2026-11-09
+
+### Fixes
+
+- **The Cable Tester measures the cable, not the Macs' USB networking.** Two
+  Macs joined by one USB-C cable get two wired links: Thunderbolt, and a USB
+  network connection the Macs set up between themselves. The test could pick
+  the USB one and report about 41 MB/s on every cable, even a Thunderbolt cable
+  capable of over 30 Gbps. It now always uses the Thunderbolt link when there is
+  one. A run that can only go over USB networking is labelled as such and gets
+  no verdict on the cable, and the interface it reports is the one the test
+  really used.
+- **The Cable Tester runs faster on quick links.** Its own data pump topped out
+  around 2.1 GB/s, below what a Thunderbolt link can carry; it now reaches about
+  3.5 GB/s, so a fast cable is no longer under-reported.
+- **Cable Tester results over Thunderbolt show how much of the link they
+  used.** The app couldn't tell which port a Thunderbolt run went through, so
+  the "% of the link" bar and its healthy/low verdict never appeared, and saved
+  results lacked the cable's rating and link speed. It now finds the port by
+  the other Mac on the far end of it.
+- **A port linked to another Mac no longer blames that Mac for being slow.**
+  The Macs' own USB networking shows up as a 480 Mbps Apple device on the port,
+  and "Why is this slow?" called it the limit of a 40 Gbps Thunderbolt link.
+  It's now left out of that verdict.
+- **"Update available" always comes with its Download button.** A daily update
+  check that ran while the Mac was offline could hide the Download button and
+  leave "Update available" showing. The button now stays until a check says
+  otherwise.
+- **Choosing a new capture folder clears the old folder's warning.** Tether
+  Throughput kept showing the previous folder's "isn't there right now" warning
+  under the newly chosen folder until its next scan.
+
+---
+
 ## [1.0.8] — 2026-11-05
 
 ### Licensing fixes
